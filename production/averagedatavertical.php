@@ -101,11 +101,11 @@ if(empty($result))
 // buat query untuk INSERT data ke tabel mahasiswa
   $query  = "INSERT INTO averagedatavertical (playerid,tipe,percentage) VALUES
 
-    (1,'avgTangibles',$avgTangibles[0]),
-    (2,'avgReliability',$avgReliability[0]),
-    (3,'avgResponsiveness',$avgResponsiveness[0]),
-    (4,'avgAssurance',$avgAssurance[0]),
-    (5,'avgEmpathy',$avgEmpathy[0])";
+    (1,'Tangibles',$avgTangibles[0]),
+    (2,'Reliability',$avgReliability[0]),
+    (3,'Responsiveness',$avgResponsiveness[0]),
+    (4,'Assurance',$avgAssurance[0]),
+    (5,'Empathy',$avgEmpathy[0])";
   $hasil_query = mysqli_query($link, $query);
 
   if(!$hasil_query){
