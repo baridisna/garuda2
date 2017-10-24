@@ -92,6 +92,7 @@ $excel->getActiveSheet()->getRowDimension('3')->setRowHeight(20);
 // Buat query untuk menampilkan semua data karyawan
 $sql = $pdo->prepare("SELECT * FROM pertanyaan");
 $sql->execute(); // Eksekusi querynya
+
 $no = 1; // Untuk penomoran tabel, di awal set dengan 1
 $numrow = 4; // Set baris pertama untuk isi tabel adalah baris ke 4
 while($data = $sql->fetch()){ // Ambil semua data dari hasil eksekusi $sql
@@ -99,26 +100,27 @@ while($data = $sql->fetch()){ // Ambil semua data dari hasil eksekusi $sql
   $excel->setActiveSheetIndex(0)->setCellValue('B'.$numrow, $data['id']);
   $excel->setActiveSheetIndex(0)->setCellValue('C'.$numrow, $data['dimensi']);
   $excel->setActiveSheetIndex(0)->setCellValue('D'.$numrow, $data['pertanyaan']);
- 
   // Apply style row yang telah kita buat tadi ke masing-masing baris (isi tabel)
   $excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($style_row);
   $excel->getActiveSheet()->getStyle('B'.$numrow)->applyFromArray($style_row);
   $excel->getActiveSheet()->getStyle('C'.$numrow)->applyFromArray($style_row);
   $excel->getActiveSheet()->getStyle('D'.$numrow)->applyFromArray($style_row);
-  $excel->getActiveSheet()->getRowDimension($numrow)->setRowHeight(50);
+  $excel->getActiveSheet()->getRowDimension($numrow)->setRowHeight(30);
   $excel->getActiveSheet()->getStyle('A'.$numrow)->getAlignment()->setWrapText(true);
   $excel->getActiveSheet()->getStyle('B'.$numrow)->getAlignment()->setWrapText(true);
   $excel->getActiveSheet()->getStyle('C'.$numrow)->getAlignment()->setWrapText(true);
   $excel->getActiveSheet()->getStyle('D'.$numrow)->getAlignment()->setWrapText(true);
   $no++; // Tambah 1 setiap kali looping
   $numrow++; // Tambah 1 setiap kali looping
+  
 }
+
 // Set width kolom
 $excel->getActiveSheet()->getColumnDimension('A')->setWidth(5); // Set width kolom A
 $excel->getActiveSheet()->getColumnDimension('B')->setWidth(30); // Set width kolom B
 $excel->getActiveSheet()->getColumnDimension('C')->setWidth(30); // Set width kolom C
 $excel->getActiveSheet()->getColumnDimension('D')->setWidth(30); // Set width kolom D
-$excel->getActiveSheet()->getColumnDimension('E')->setWidth(10); // Set width kolom E
+$excel->getActiveSheet()->getColumnDimension('E')->setWidth(30); // Set width kolom E
 $excel->getActiveSheet()->getColumnDimension('F')->setWidth(5); // Set width kolom F
 $excel->getActiveSheet()->getColumnDimension('G')->setWidth(30); // Set width kolom F
 $excel->getActiveSheet()->getColumnDimension('H')->setWidth(30); // Set width kolom A
