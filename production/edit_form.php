@@ -198,15 +198,17 @@
                                               <select name="selecter_basic" id="selecter_basic" class="selecter_basic">
                                                   <option>tangibles</option>
                                                   <option>reliability</option>
+                                                  <option>responsiveness</option>
+                                                  <option>empathy</option>
                                               </select>
                                             </form>
                                          </td>
                                          <td><input type="text" name="pertanyaan[]" placeholder="Masukkan pertanyaan" class="form-control name_list" /></td>
-                                         <td><button type="button" name="add_dim" id="add_dim" class="btn btn-success">Add More</button></td>
+                                         <td><button type="button" name="add_per" id="add_per" class="btn btn-success">Add More</button></td>
 
                                     </tr>  
                                </table>  
-                               <input type="button" name="submit_dim" id="submit_dim" class="btn btn-info" value="Submit Pertanyaan" />  
+                               <input type="button" name="submit_per" id="submit_per" class="btn btn-info" value="Submit Pertanyaan" />  
                           </div>  
                     </form> 
                   </div>
