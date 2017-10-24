@@ -165,26 +165,19 @@
                   </div>
                   <div class="x_content">
                     <br />
-                    <form name="add_name" id="add_name">
-                          <div class="table-responsive">
-                               <table class="table table-bordered" id="dynamic_field">
-                                    <tr>
+                    <form name="add_name" id="add_name">  
+                          <div class="table-responsive">  
+                               <table class="table table-bordered" id="dynamic_field">  
+                                    <tr>  
                                          <td><input type="text" name="dimensi[]" placeholder="Masukkan Dimensi" class="form-control name_list" /></td>
+                                         <td><input type="text" name="pertanyaan[]" placeholder="Masukkan Pertanyaan" class="form-control name_list" /></td>
+                                         <td><button type="button" name="add" id="add" class="btn btn-success">Add More</button></td>
 
-                                         <td><button type="button" name="add" id="add" class="btn btn-success">Add Dimensi</button></td>
-<td></td>
-
-                                    </tr>
-                                    <tr>
-                                      <td></td>
-                                      <td><input type="text" name="pertanyaan[]" placeholder="Masukkan Pertanyaan" class="form-control name_list" /></td>
-                                      <td><button type="button" name="add" id="add_pertanyaan" class="btn btn-warning" >Add</button></td>
-                                    </tr>
-                               </table>
-
-                               <input type="button" name="submit" id="submit" class="btn btn-info" value="Submit" />
-                          </div>
-                    </form>
+                                    </tr>  
+                               </table>  
+                               <input type="button" name="submit" id="submit" class="btn btn-info" value="Submit" />  
+                          </div>  
+                    </form> 
                   </div>
                 </div>
               </div>
