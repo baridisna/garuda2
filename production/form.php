@@ -19,7 +19,7 @@
     if (!$result) {
       die ('SQL Error: ' . mysqli_error($link));
     }
- ?> 
+ ?>
 ?>
 
 <!DOCTYPE html>
@@ -160,6 +160,9 @@
         <!-- /top navigation -->
 
         <!-- page content -->
+        <form action="form.php" method="post">
+
+
         <div class="right_col" role="main">
           <div class="">
             <div class="page-title">
@@ -231,9 +234,9 @@
             </div>
             <div class="clearfix"></div>
             <div class="row">
-              <div class="col-md-1 col-sm-1 col-xs-1"></div>           
+              <div class="col-md-1 col-sm-1 col-xs-1"></div>
               <div class="col-md-10 col-sm-10 col-xs-10">
-                
+
               </div>
               <div class="col-md-1"> </div>
             </div>
@@ -262,6 +265,7 @@
 
           </div>
         </div>
+            </form>
         <!-- /page content -->
 
         <!-- footer content -->
