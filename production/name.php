@@ -1,4 +1,4 @@
-<?php
+ <?php
   $servername = "localhost";  
   $username = "root";
   $password = "";
@@ -17,7 +17,7 @@
     {  
            if(trim($_POST["dimensi"][$i] != ''))  
            {  
-                $sql = "INSERT INTO pertanyaan(dimensi, pertanyaan) VALUES('".mysqli_real_escape_string($conn, $_POST["dimensi"][$i])."', '".mysqli_real_escape_string($conn, $_POST["pertanyaan"][$i])."')";  
+                $sql = "INSERT INTO dimensi(dimensi) VALUES('".mysqli_real_escape_string($conn, $_POST["dimensi"][$i])."')";  
                 mysqli_query($conn, $sql);  
            }  
       }  

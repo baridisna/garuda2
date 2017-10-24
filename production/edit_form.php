@@ -160,29 +160,59 @@
               <div class="col-md-10 col-sm-10 col-xs-10">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2><small></small></h2>
+                    <h2><b>DIMENSI</b></h2>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
                     <br />
-                    <form name="add_name" id="add_name">  
+                    <form name="add_dimensi" id="add_dimensi">  
                           <div class="table-responsive">  
-                               <table class="table table-bordered" id="dynamic_field">  
+                               <table class="table table-bordered" id="dynamic_field1">  
                                     <tr>  
                                          <td><input type="text" name="dimensi[]" placeholder="Masukkan Dimensi" class="form-control name_list" /></td>
-                                         <td><input type="text" name="pertanyaan[]" placeholder="Masukkan Pertanyaan" class="form-control name_list" /></td>
                                          <td><button type="button" name="add" id="add" class="btn btn-success">Add More</button></td>
 
                                     </tr>  
                                </table>  
-                               <input type="button" name="submit" id="submit" class="btn btn-info" value="Submit" />  
+                               <input type="button" name="submit" id="submit" class="btn btn-info" value="Submit Dimensi" /><a>submit first!!</a>  
+                          </div>  
+                    </form>
+                  </div>
+                </div>
+
+
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2><b>PERTANYAAN</b></h2>
+                    <div class="clearfix"></div>
+                  </div>
+                    <div class="x_content">
+                    <br />
+                    <form name="add_pertanyaan" id="add_pertanyaan">  
+                          <div class="table-responsive">  
+                               <table class="table table-bordered" id="dynamic_field2">  
+                                    <tr>  
+                                         <td>
+                                            <form action="#" method="GET">
+                                              <label for="selecter_basic">Pilih Dimensi</label>
+                                              <select name="selecter_basic" id="selecter_basic" class="selecter_basic">
+                                                  <option>tangibles</option>
+                                                  <option>reliability</option>
+                                              </select>
+                                            </form>
+                                         </td>
+                                         <td><input type="text" name="pertanyaan[]" placeholder="Masukkan pertanyaan" class="form-control name_list" /></td>
+                                         <td><button type="button" name="add_dim" id="add_dim" class="btn btn-success">Add More</button></td>
+
+                                    </tr>  
+                               </table>  
+                               <input type="button" name="submit_dim" id="submit_dim" class="btn btn-info" value="Submit Pertanyaan" />  
                           </div>  
                     </form> 
                   </div>
                 </div>
               </div>
-              <div class="col-md-1 col-sm-1 col-xs-1"></div>
-            </div>
+            <div class="col-md-1 col-sm-1 col-xs-1"></div>
 
             <div class="row">
               <div class="col-md-1 col-sm-1 col-xs-1"></div>
@@ -247,6 +277,5 @@
     <script src="../build/js/custom.min.js"></script>
     <!-- edit form js -->
     <script src="js/edit_form.js"></script>
-
   </body>
 </html>s
