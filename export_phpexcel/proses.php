@@ -1,8 +1,8 @@
 <?php
 // Load file koneksi.php
-include "koneksi.php";
+include ('koneksi.php');
 // Load plugin PHPExcel nya
-require_once 'PHPExcel/PHPExcel.php';
+require_once ('PHPExcel/PHPExcel.php');
 // Panggil class PHPExcel nya
 $excel = new PHPExcel();
 // Settingan awal file excel
@@ -18,7 +18,7 @@ $style_col = array(
   'alignment' => array(
     'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER, // Set text jadi ditengah secara horizontal (center)
     'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER // Set text jadi di tengah secara vertical (middle)
-	
+
   ),
   'borders' => array(
     'top' => array('style'  => PHPExcel_Style_Border::BORDER_THIN), // Set border top dengan garis tipis
@@ -112,7 +112,7 @@ while($data = $sql->fetch()){ // Ambil semua data dari hasil eksekusi $sql
   $excel->getActiveSheet()->getStyle('D'.$numrow)->getAlignment()->setWrapText(true);
   $no++; // Tambah 1 setiap kali looping
   $numrow++; // Tambah 1 setiap kali looping
-  
+
 }
 
 // Set width kolom
@@ -139,6 +139,6 @@ $excel->setActiveSheetIndex(0);
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 header('Content-Disposition: attachment; filename="Data Survey.xlsx"'); // Set nama file excel nya
 header('Cache-Control: max-age=0');
-$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
+$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2016');
 $write->save('php://output');
 ?>
