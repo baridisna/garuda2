@@ -177,7 +177,7 @@
                                   '.$row['pertanyaan'].'</div>
                                   <ul class="likertsurvey">
                                     <li>
-                                        <label class="pilihan">
+                                        <label class="pilihan likertsurvey">
                                           <input type="radio" name="'.$row['dimensi'].'" value="1">
                                           <img src="./images/sangat_tidak_setuju.png">
                                         </label><br>
@@ -185,7 +185,7 @@
                                     </li>
 
                                     <li>
-                                        <label class="pilihan">
+                                        <label class="pilihan likertsurvey">
                                           <input type="radio" name="'.$row['dimensi'].'" value="2">
                                           <img src="./images/tidak_setuju.png">
                                         </label><br>
