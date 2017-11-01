@@ -25,7 +25,7 @@
     
     <h3>Data Survey</h3>
     
-    <a href="proses.php">Export ke Excel</a><br><br>
+    <a href="proses.php">Download</a><br><br>
     
     <table border="1" cellpadding="5">
       <tr>

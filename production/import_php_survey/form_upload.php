@@ -19,13 +19,13 @@
 		<title>Import Data Excel dengan PHP</title>
 
 		<!-- Load File bootstrap.min.css yang ada difolder css -->
-		<link href="import_php_survey/css/bootstrap.min.css" rel="stylesheet">
+		<link href="css_upload/bootstrap.min.css" rel="stylesheet">
 
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>
 		  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-		  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		  <script src="https://oss.maxcdn.com/libs/respond.js_upload/1.4.2/respond.min.js"></script>
 		<![endif]-->
 		
 		<!-- Style untuk Loading -->
@@ -41,7 +41,7 @@
 		</style>
 		
 		<!-- Load File jquery.min.js yang ada difolder js -->
-		<script src="import_php_survey/js/jquery.min.js"></script>
+		<script src="js_upload/jquery.min.js"></script>
 		
 		<script>
 		$(document).ready(function(){
@@ -52,10 +52,24 @@
 	</head>
 	<body>
 		<!-- Membuat Menu Header / Navbar -->
+		<nav class="navbar navbar-inverse" role="navigation">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#" style="color: white;"><b>Import Data Excel dengan PHP</b></a>
+				</div>
+				<p class="navbar-text navbar-right hidden-xs" style="color: white;padding-right: 10px;">
+					FOLLOW US ON &nbsp;
+					<a target="_blank" style="background: #3b5998; padding: 0 5px; border-radius: 4px; color: #f7f7f7; text-decoration: none;" href="https://www.facebook.com/mynotescode">Facebook</a> 
+					<a target="_blank" style="background: #00aced; padding: 0 5px; border-radius: 4px; color: #ffffff; text-decoration: none;" href="https://twitter.com/code_notes">Twitter</a> 
+					<a target="_blank" style="background: #d34836; padding: 0 5px; border-radius: 4px; color: #ffffff; text-decoration: none;" href="https://plus.google.com/118319575543333993544">Google+</a>
+				</p>
+			</div>
+		</nav>
+		
 		<!-- Content -->
 		<div style="padding: 0 15px;">
 			<!-- Buat sebuah tombol Cancel untuk kemabli ke halaman awal / view data -->
-			<a href="import_php_survey/index.php" class="btn btn-danger pull-right">
+			<a href="index_php.php" class="btn btn-danger pull-right">
 				<span class="glyphicon glyphicon-remove"></span> Cancel
 			</a>
 			
@@ -64,7 +78,7 @@
 			
 			<!-- Buat sebuah tag form dan arahkan action nya ke file ini lagi -->
 			<form method="post" action="" enctype="multipart/form-data">
-				<a href="import_php_survey/dokumen.xlsx" class="btn btn-default">
+				<a href="dokumen_survey.xlsx" class="btn btn-default">
 					<span class="glyphicon glyphicon-download"></span>
 					Download dokumen di sini
 				</a><br><br>
@@ -90,9 +104,8 @@
 				$nama_file_baru = 'data.xlsx';
 				
 				// Cek apakah terdapat file data.xlsx pada folder tmp
-				if(is_file('tmp/'.$nama_file_baru)) // Jika file tersebut ada
-					unlink('tmp/'.$nama_file_baru); // Hapus file tersebut
-				
+				if(is_file('tmp_upload/'.$nama_file_baru)) // Jika file tersebut ada
+				unlink('tmp_upload/'.$nama_file_baru); // Hapus file tersebut
 				$tipe_file = $_FILES['file']['type']; // Ambil tipe file yang akan diupload
 				$tmp_file = $_FILES['file']['tmp_name'];
 				
@@ -102,17 +115,17 @@
 					// dan rename file tersebut menjadi data{ip_address}.xlsx
 					// {ip_address} diganti jadi ip address user yang ada di variabel $ip
 					// Contoh nama file setelah di rename : data127.0.0.1.xlsx
-					move_uploaded_file($tmp_file, 'tmp/'.$nama_file_baru);
+					move_uploaded_file($tmp_file, 'tmp_upload/'.$nama_file_baru);
 					
 					// Load librari PHPExcel nya
 					require_once 'PHPExcel/PHPExcel.php';
 					
 					$excelreader = new PHPExcel_Reader_Excel2007();
-					$loadexcel = $excelreader->load('tmp/'.$nama_file_baru); // Load file yang tadi diupload ke folder tmp
+					$loadexcel = $excelreader->load('tmp_upload/'.$nama_file_baru); // Load file yang tadi diupload ke folder tmp
 					$sheet = $loadexcel->getActiveSheet()->toArray(null, true, true ,true);
 					
 					// Buat sebuah tag form untuk proses import data ke database
-					echo "<form method='post' action='import.php'>";
+					echo "<form method='post' action='import_php.php'>";
 					
 					// Buat sebuah div untuk alert validasi kosong
 					echo "<div class='alert alert-danger' id='kosong'>
@@ -121,55 +134,55 @@
 					
 					echo "<table class='table table-bordered'>
 					<tr>
-						<th colspan='5' class='text-center'>Preview Data</th>
+						<th colspan='6' class='text-center'>Preview Data</th>
 					</tr>
 					<tr>
-						<th>Nama Karyawan</th>
+						<th>ID Karyawan</th>
 						<th>Tangibles</th>
 						<th>Reliability</th>
-						<th>Responsiivness</th>
-						<th>Assurence</th>
-						<th>Emphaty</th>
+						<th>responsiveness</th>
+						<th>assurance</th>
+						<th>empathy</th>
 					</tr>";
 					
-					$numrow = 1;
+					$numrow = 2;
 					$kosong = 0;
 					foreach($sheet as $row){ // Lakukan perulangan dari data yang ada di excel
 						// Ambil data pada excel sesuai Kolom
-						$nama_karyawan = $row['A']; // Ambil data NIS
-						$tangibles = $row['B']; // Ambil data nama
-						$reliability = $row['C']; // Ambil data jenis kelamin
-						$responsiivness= $row['D']; // Ambil data telepon
-						$assurence= $row['E']; // Ambil data alamat
-						$emphaty= $row['F']; // Ambil data alamat
+						$id = $row['I']; // Ambil data NIS
+						$tangibles = $row['J']; // Ambil data nama
+						$reliability = $row['K']; // Ambil data jenis kelamin
+						$responsiveness= $row['L']; // Ambil data telepon
+						$assurance= $row['M']; // Ambil data alamat
+						$empathy= $row['N']; // Ambil data alamat
 						
 						// Cek jika semua data tidak diisi
-						if(empty($nama_karyawan) && empty($tangibles) && empty($reliability) && empty($responsiivness) && empty($assurence)&& empty($emphaty))
+						if(empty($id) && empty($tangibles) && empty($reliability) && empty($responsiveness) && empty($assurance)&& empty($empathy))
 							continue; // Lewat data pada baris ini (masuk ke looping selanjutnya / baris selanjutnya)
 						
 						// Cek $numrow apakah lebih dari 1
 						// Artinya karena baris pertama adalah nama-nama kolom
 						// Jadi dilewat saja, tidak usah diimport
-						if($numrow > 1){
+						if($numrow > 3){
 							// Validasi apakah semua data telah diisi
-							$nama_karyawan_td = ( ! empty($nama_karyawan))? "" : " style='background: #E07171;'"; // Jika NIS kosong, beri warna merah
+							$nama_karyawan_td = ( ! empty($id))? "" : " style='background: #E07171;'"; // Jika NIS kosong, beri warna merah
 							$tangibles_td = ( ! empty($tangibles))? "" : " style='background: #E07171;'"; // Jika Nama kosong, beri warna merah
 							$realibility_td = ( ! empty($reliability))? "" : " style='background: #E07171;'"; // Jika Jenis Kelamin kosong, beri warna merah
-							$responsiivness_td = ( ! empty($responsiivness))? "" : " style='background: #E07171;'"; // Jika Telepon kosong, beri warna merah
-							$assurence_td = ( ! empty($assurence))? "" : " style='background: #E07171;'"; // Jika Alamat kosong, beri warna merah
-							$emphaty_td = ( ! empty($emphaty))? "" : " style='background: #E07171;'"; // Jika Alamat kosong, beri warna merah
+							$responsiivness_td = ( ! empty($responsiveness))? "" : " style='background: #E07171;'"; // Jika Telepon kosong, beri warna merah
+							$assurence_td = ( ! empty($assurance))? "" : " style='background: #E07171;'"; // Jika Alamat kosong, beri warna merah
+							$emphaty_td = ( ! empty($empathy))? "" : " style='background: #E07171;'"; // Jika Alamat kosong, beri warna merah
 							// Jika salah satu data ada yang kosong
-							if(empty($nama_karyawan) or empty($tangibles) or empty($reliability) or empty($responsiivness) or empty($assurence)or empty($emphaty)){
+							if(empty($id) or empty($tangibles) or empty($reliability) or empty($responsiveness) or empty($assurance)or empty($empathy)){
 								$kosong++; // Tambah 1 variabel $kosong
 							}
 							
 							echo "<tr>";
-							echo "<td".$nama_karyawan_td.">".$nama_karyawan."</td>";
-							echo "<td".$tangibles.">".$tangibles."</td>";
+							echo "<td".$nama_karyawan_td.">".$id."</td>";
+							echo "<td".$tangibles_td.">".$tangibles."</td>";
 							echo "<td".$realibility_td.">".$reliability."</td>";
-							echo "<td".$responsiivness_td.">".$responsiivness."</td>";
-							echo "<td".$assurence_td.">".$assurence."</td>";
-							echo "<td".$emphaty_td.">".$emphaty."</td>";
+							echo "<td".$responsiivness_td.">".$responsiveness."</td>";
+							echo "<td".$assurence_td.">".$assurance."</td>";
+							echo "<td".$emphaty_td.">".$empathy."</td>";
 							echo "</tr>";
 						}
 						

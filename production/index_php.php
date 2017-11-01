@@ -162,20 +162,28 @@
 
 					<div class="tab">
 					
-					<button class="tablinks" onclick="openLoad(event, 'Upload')">Click Here</button>
+					<button class="tablinks" onclick="openLoad(event, 'Paris')">Upload Berhasil</button>
 					</div>
-					
-					
   
 					<div class="x_panel">
 					<div class="x_content">
 					
 
-					<div id="Upload" class="tabcontent">
+					<div id="Paris" class="tabcontent">
   
 					<!-- file php IMPORT-->
 					
 					
+					<style>
+					#loading{
+						background: whitesmoke;
+						position: absolute;
+						top: 140px;
+						left: 82px;
+						padding: 5px 10px;
+						border: 1px solid #ccc;
+					}
+					</style>
 					
 					<!-- Load File jquery.min.js yang ada difolder js -->
 					<script src="js_upload/jquery.min.js"></script>
@@ -190,159 +198,56 @@
 				<body>
 				<!-- Content -->
 				<div style="padding: 0 15px;">
-			<!-- Buat sebuah tombol Cancel untuk kemabli ke halaman awal / view data -->
-			<a href="index_php.php" class="btn btn-danger pull-right">
-				<span class="glyphicon glyphicon-remove"></span> Cancel
+			<!-- 
+			-- Buat sebuah tombol untuk mengarahkan ke form import data
+			-- Tambahkan class btn agar terlihat seperti tombol
+			-- Tambahkan class btn-success untuk tombol warna hijau
+			-- class pull-right agar posisi link berada di sebelah kanan
+			-->
+			<a href="form_upload.php" class="btn btn-success pull-right">
+				<span class="glyphicon glyphicon-upload"></span> Import Data
 			</a>
 			
-			<h3>Welcome</h3>
+			<h3>Data Hasil Import</h3>
+			
 			<hr>
 			
-			<!-- Buat sebuah tag form dan arahkan action nya ke file ini lagi -->
-			<form method="post" action="" enctype="multipart/form-data">
-	
-				
-				<h4>Download form dan isi terlebih dahulu sebelum mengupload. Klik choose file untuk mengupload.</h4>
-				<br></br>
-				<input type="file" name="file" class="pull-left">
-			
-				<a href="proses.php">
-				<span class="glyphicon glyphicon-download"></span>
-				Download Form
-				</a><br><br>
-				
-			
-				<button type="submit" name="preview" class="btn btn-success btn-sm">
-					<span class="glyphicon glyphicon-eye-open"></span> Preview
-				</button>
-			</form>
-			
-			</hr>
-			
-			<!-- Buat Preview Data -->
-			<?php
-			// Jika user telah mengklik tombol Preview
-			if(isset($_POST['preview'])){
-				//$ip = ; // Ambil IP Address dari User
-				$nama_file_baru = 'data.xlsx';
-				
-				// Cek apakah terdapat file data.xlsx pada folder tmp
-				if(is_file('tmp_upload/'.$nama_file_baru)) // Jika file tersebut ada
-				unlink('tmp_upload/'.$nama_file_baru); // Hapus file tersebut
-				$tipe_file = $_FILES['file']['type']; // Ambil tipe file yang akan diupload
-				$tmp_file = $_FILES['file']['tmp_name'];
-				
-				// Cek apakah file yang diupload adalah file Excel 2007 (.xlsx)
-				if($tipe_file == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"){
-					// Upload file yang dipilih ke folder tmp
-					// dan rename file tersebut menjadi data{ip_address}.xlsx
-					// {ip_address} diganti jadi ip address user yang ada di variabel $ip
-					// Contoh nama file setelah di rename : data127.0.0.1.xlsx
-					move_uploaded_file($tmp_file, 'tmp_upload/'.$nama_file_baru);
-					
-					// Load librari PHPExcel nya
-					require_once 'PHPExcel/PHPExcel.php';
-					
-					$excelreader = new PHPExcel_Reader_Excel2007();
-					$loadexcel = $excelreader->load('tmp_upload/'.$nama_file_baru); // Load file yang tadi diupload ke folder tmp
-					$sheet = $loadexcel->getActiveSheet()->toArray(null, true, true ,true);
-					
-					// Buat sebuah tag form untuk proses import data ke database
-					echo "<form method='post' action='import_php.php'>";
-					
-					// Buat sebuah div untuk alert validasi kosong
-					echo "<div class='alert alert-danger' id='kosong'>
-					Semua data belum diisi, Ada <span id='jumlah_kosong'></span> data yang belum diisi.
-					</div>";
-					
-					echo "<table class='table table-bordered'>
+			<!-- Buat sebuah div dan beri class table-responsive agar tabel jadi responsive -->
+			<div class="table-responsive">
+				<table class="table table-bordered">
 					<tr>
-						<th colspan='6' class='text-center'>Preview Data</th>
-					</tr>
-					<tr>
+						<th>No</th>
 						<th>ID Karyawan</th>
 						<th>Tangibles</th>
 						<th>Reliability</th>
-						<th>responsiveness</th>
-						<th>assurance</th>
-						<th>empathy</th>
-					</tr>";
-					
-					$numrow = 2;
-					$kosong = 0;
-					foreach($sheet as $row){ // Lakukan perulangan dari data yang ada di excel
-						// Ambil data pada excel sesuai Kolom
-						$id = $row['I']; // Ambil data NIS
-						$tangibles = $row['J']; // Ambil data nama
-						$reliability = $row['K']; // Ambil data jenis kelamin
-						$responsiveness= $row['L']; // Ambil data telepon
-						$assurance= $row['M']; // Ambil data alamat
-						$empathy= $row['N']; // Ambil data alamat
-						
-						// Cek jika semua data tidak diisi
-						if(empty($id) && empty($tangibles) && empty($reliability) && empty($responsiveness) && empty($assurance)&& empty($empathy))
-							continue; // Lewat data pada baris ini (masuk ke looping selanjutnya / baris selanjutnya)
-						
-						// Cek $numrow apakah lebih dari 1
-						// Artinya karena baris pertama adalah nama-nama kolom
-						// Jadi dilewat saja, tidak usah diimport
-						if($numrow > 3){
-							// Validasi apakah semua data telah diisi
-							$nama_karyawan_td = ( ! empty($id))? "" : " style='background: #E07171;'"; // Jika NIS kosong, beri warna merah
-							$tangibles_td = ( ! empty($tangibles))? "" : " style='background: #E07171;'"; // Jika Nama kosong, beri warna merah
-							$realibility_td = ( ! empty($reliability))? "" : " style='background: #E07171;'"; // Jika Jenis Kelamin kosong, beri warna merah
-							$responsiivness_td = ( ! empty($responsiveness))? "" : " style='background: #E07171;'"; // Jika Telepon kosong, beri warna merah
-							$assurence_td = ( ! empty($assurance))? "" : " style='background: #E07171;'"; // Jika Alamat kosong, beri warna merah
-							$emphaty_td = ( ! empty($empathy))? "" : " style='background: #E07171;'"; // Jika Alamat kosong, beri warna merah
-							// Jika salah satu data ada yang kosong
-							if(empty($id) or empty($tangibles) or empty($reliability) or empty($responsiveness) or empty($assurance)or empty($empathy)){
-								$kosong++; // Tambah 1 variabel $kosong
-							}
-							
-							echo "<tr>";
-							echo "<td".$nama_karyawan_td.">".$id."</td>";
-							echo "<td".$tangibles_td.">".$tangibles."</td>";
-							echo "<td".$realibility_td.">".$reliability."</td>";
-							echo "<td".$responsiivness_td.">".$responsiveness."</td>";
-							echo "<td".$assurence_td.">".$assurance."</td>";
-							echo "<td".$emphaty_td.">".$empathy."</td>";
-							echo "</tr>";
-						}
-						
-						$numrow++; // Tambah 1 setiap kali looping
-					}
-					
-					echo "</table>";
-					
-					// Cek apakah variabel kosong lebih dari 1
-					// Jika lebih dari 1, berarti ada data yang masih kosong
-					if($kosong > 1){
-					?>	
-						<script>
-						$(document).ready(function(){
-							// Ubah isi dari tag span dengan id jumlah_kosong dengan isi dari variabel kosong
-							$("#jumlah_kosong").html('<?php echo $kosong; ?>');
-							
-							$("#kosong").show(); // Munculkan alert validasi kosong
-						});
-						</script>
+						<th>Responsiveness</th>
+						<th>Assurance</th>
+						<th>Empathy</th>
+					</tr>
 					<?php
-					}else{ // Jika semua data sudah diisi
-						echo "<hr>";
-						
-						// Buat sebuah tombol untuk mengimport data ke database
-						echo "<button type='submit' name='import' class='btn btn-primary'><span class='glyphicon glyphicon-upload'></span> Import</button>";
-					}
+					// Load file koneksi.php
+					include "koneksi_php.php";
 					
-					echo "</form>";
-				}else{ // Jika file yang diupload bukan File Excel 2007 (.xlsx)
-					// Munculkan pesan validasi
-					echo "<div class='alert alert-danger'>
-					Hanya File Excel 2007 (.xlsx) yang diperbolehkan
-					</div>";
-				}
-			}
-			?>
+					// Buat query untuk menampilkan semua data survey
+					$sql = $pdo->prepare("SELECT * FROM datasurvey");
+					$sql->execute(); // Eksekusi querynya
+					
+					$no = 1; // Untuk penomoran tabel, di awal set dengan 1
+					while($data = $sql->fetch()){ // Ambil semua data dari hasil eksekusi $sql
+						echo "<tr>";
+						echo "<td>".$no."</td>";
+						echo "<td>".$data['id']."</td>";
+						echo "<td>".$data['tangibles']."</td>";
+						echo "<td>".$data['reliability']."</td>";
+						echo "<td>".$data['responsiveness']."</td>";
+						echo "<td>".$data['assurance']."</td>";
+						echo "<td>".$data['empathy']."</td>";
+						echo "</tr>";
+						$no++; // Tambah 1 setiap kali looping
+					}
+					?>
+				</table>
+			</div>
 		</div>
 	</body>
 </html>
