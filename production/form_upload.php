@@ -202,7 +202,7 @@
 			<form method="post" action="" enctype="multipart/form-data">
 	
 				
-				<h4>Download form dan isi terlebih dahulu sebelum mengupload. Klik choose file untuk mengupload.</h4>
+				<h4>Download form dan isi terlebih dahulu sebelum mengupload. Klik choose file untuk memilih form yang telah anda isi.</h4>
 				<br></br>
 				<input type="file" name="file" class="pull-left">
 			
@@ -331,7 +331,7 @@
 						echo "<hr>";
 						
 						// Buat sebuah tombol untuk mengimport data ke database
-						echo "<button type='submit' name='import' class='btn btn-primary'><span class='glyphicon glyphicon-upload'></span> Import</button>";
+						echo "<button type='submit' name='upload' class='btn btn-primary'><span class='glyphicon glyphicon-upload'></span> upload</button>";
 					}
 					
 					echo "</form>";
