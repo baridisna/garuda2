@@ -1,4 +1,14 @@
-
+<!--
+-- Source Code from My Notes Code (www.mynotescode.com)
+-- 
+-- Follow Us on Social Media
+-- Facebook : http://facebook.com/mynotescode/
+-- Twitter  : http://twitter.com/code_notes
+-- Google+  : http://plus.google.com/118319575543333993544
+--
+-- Terimakasih telah mengunjungi blog kami.
+-- Jangan lupa untuk Like dan Share catatan-catatan yang ada di blog kami.
+-->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,13 +19,13 @@
 		<title>Import Data Excel dengan PHP</title>
 
 		<!-- Load File bootstrap.min.css yang ada difolder css -->
-		<link href="css_upload/bootstrap.min.css" rel="stylesheet">
+		<link href="css/bootstrap.min.css" rel="stylesheet">
 
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>
-		  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js_upload"></script>
-		  <script src="https://oss.maxcdn.com/libs/respond.js_upload/1.4.2/respond.min.js"></script>
+		  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
 		
 		<!-- Style untuk Loading -->
@@ -54,7 +64,7 @@
 			-- Tambahkan class btn-success untuk tombol warna hijau
 			-- class pull-right agar posisi link berada di sebelah kanan
 			-->
-			<a href="form_upload.php" class="btn btn-success pull-right">
+			<a href="form.php" class="btn btn-success pull-right">
 				<span class="glyphicon glyphicon-upload"></span> Import Data
 			</a>
 			
@@ -70,13 +80,13 @@
 						<th>ID Karyawan</th>
 						<th>Tangibles</th>
 						<th>Reliability</th>
-						<th>Responsiveness</th>
-						<th>Assurance</th>
-						<th>Empathy</th>
+						<th>Responsiiveness</th>
+						<th>Assurence</th>
+						<th>Emphaty</th>
 					</tr>
 					<?php
 					// Load file koneksi.php
-					include "koneksi_php.php";
+					include "koneksi.php";
 					
 					// Buat query untuk menampilkan semua data survey
 					$sql = $pdo->prepare("SELECT * FROM datasurvey");
@@ -93,6 +103,7 @@
 						echo "<td>".$data['assurance']."</td>";
 						echo "<td>".$data['empathy']."</td>";
 						echo "</tr>";
+						
 						$no++; // Tambah 1 setiap kali looping
 					}
 					?>
