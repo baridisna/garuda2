@@ -184,7 +184,186 @@
         </div>
 
 <div id="Paris" class="tabcontent">
+<<<<<<< HEAD
 
+=======
+  
+<<<<<<< HEAD
+					<!-- file php IMPORT-->
+					
+					
+					
+					<!-- Load File jquery.min.js yang ada difolder js -->
+					<script src="js_upload/jquery.min.js"></script>
+		
+					<script>
+					$(document).ready(function(){
+						// Sembunyikan alert validasi kosong
+						$("#kosong").hide();
+					});
+					</script>
+				</head>
+				<body>
+				<!-- Content -->
+				<div style="padding: 0 15px;">
+			<!-- Buat sebuah tombol Cancel untuk kemabli ke halaman awal / view data -->
+			<a href="index_php.php" class="btn btn-danger pull-right">
+				<span class="glyphicon glyphicon-remove"></span> Cancel
+			</a>
+			
+			<h3>Welcome</h3>
+			<hr>
+			
+			<!-- Buat sebuah tag form dan arahkan action nya ke file ini lagi -->
+			<form method="post" action="" enctype="multipart/form-data">
+	
+				
+				<h4>Download form dan isi terlebih dahulu sebelum mengupload. Klik choose file untuk memilih form yang telah anda isi.</h4>
+				<br></br>
+				<input type="file" name="file" class="pull-left">
+			
+				<a href="proses.php">
+				<span class="glyphicon glyphicon-download"></span>
+				Download Form
+				</a><br><br>
+				
+			
+				<button type="submit" name="preview" class="btn btn-success btn-sm">
+					<span class="glyphicon glyphicon-eye-open"></span> Preview
+				</button>
+			</form>
+			
+			</hr>
+			
+			<!-- Buat Preview Data -->
+			<?php
+			// Jika user telah mengklik tombol Preview
+			if(isset($_POST['preview'])){
+				//$ip = ; // Ambil IP Address dari User
+				$nama_file_baru = 'data.xlsx';
+				
+				// Cek apakah terdapat file data.xlsx pada folder tmp
+				if(is_file('tmp_upload/'.$nama_file_baru)) // Jika file tersebut ada
+				unlink('tmp_upload/'.$nama_file_baru); // Hapus file tersebut
+				$tipe_file = $_FILES['file']['type']; // Ambil tipe file yang akan diupload
+				$tmp_file = $_FILES['file']['tmp_name'];
+				
+				// Cek apakah file yang diupload adalah file Excel 2007 (.xlsx)
+				if($tipe_file == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"){
+					// Upload file yang dipilih ke folder tmp
+					// dan rename file tersebut menjadi data{ip_address}.xlsx
+					// {ip_address} diganti jadi ip address user yang ada di variabel $ip
+					// Contoh nama file setelah di rename : data127.0.0.1.xlsx
+					move_uploaded_file($tmp_file, 'tmp_upload/'.$nama_file_baru);
+					
+					// Load librari PHPExcel nya
+					require_once 'PHPExcel/PHPExcel.php';
+					
+					$excelreader = new PHPExcel_Reader_Excel2007();
+					$loadexcel = $excelreader->load('tmp_upload/'.$nama_file_baru); // Load file yang tadi diupload ke folder tmp
+					$sheet = $loadexcel->getActiveSheet()->toArray(null, true, true ,true);
+					
+					// Buat sebuah tag form untuk proses import data ke database
+					echo "<form method='post' action='import_php.php'>";
+					
+					// Buat sebuah div untuk alert validasi kosong
+					echo "<div class='alert alert-danger' id='kosong'>
+					Semua data belum diisi, Ada <span id='jumlah_kosong'></span> data yang belum diisi.
+					</div>";
+					
+					echo "<table class='table table-bordered'>
+					<tr>
+						<th colspan='6' class='text-center'>Preview Data</th>
+					</tr>
+					<tr>
+						<th>ID Karyawan</th>
+						<th>Tangibles</th>
+						<th>Reliability</th>
+						<th>responsiveness</th>
+						<th>assurance</th>
+						<th>empathy</th>
+					</tr>";
+					
+					$numrow = 2;
+					$kosong = 0;
+					foreach($sheet as $row){ // Lakukan perulangan dari data yang ada di excel
+						// Ambil data pada excel sesuai Kolom
+						$id = $row['I']; // Ambil data NIS
+						$tangibles = $row['J']; // Ambil data nama
+						$reliability = $row['K']; // Ambil data jenis kelamin
+						$responsiveness= $row['L']; // Ambil data telepon
+						$assurance= $row['M']; // Ambil data alamat
+						$empathy= $row['N']; // Ambil data alamat
+						
+						// Cek jika semua data tidak diisi
+						if(empty($id) && empty($tangibles) && empty($reliability) && empty($responsiveness) && empty($assurance)&& empty($empathy))
+							continue; // Lewat data pada baris ini (masuk ke looping selanjutnya / baris selanjutnya)
+						
+						// Cek $numrow apakah lebih dari 1
+						// Artinya karena baris pertama adalah nama-nama kolom
+						// Jadi dilewat saja, tidak usah diimport
+						if($numrow > 3){
+							// Validasi apakah semua data telah diisi
+							$nama_karyawan_td = ( ! empty($id))? "" : " style='background: #E07171;'"; // Jika NIS kosong, beri warna merah
+							$tangibles_td = ( ! empty($tangibles))? "" : " style='background: #E07171;'"; // Jika Nama kosong, beri warna merah
+							$realibility_td = ( ! empty($reliability))? "" : " style='background: #E07171;'"; // Jika Jenis Kelamin kosong, beri warna merah
+							$responsiivness_td = ( ! empty($responsiveness))? "" : " style='background: #E07171;'"; // Jika Telepon kosong, beri warna merah
+							$assurence_td = ( ! empty($assurance))? "" : " style='background: #E07171;'"; // Jika Alamat kosong, beri warna merah
+							$emphaty_td = ( ! empty($empathy))? "" : " style='background: #E07171;'"; // Jika Alamat kosong, beri warna merah
+							// Jika salah satu data ada yang kosong
+							if(empty($id) or empty($tangibles) or empty($reliability) or empty($responsiveness) or empty($assurance)or empty($empathy)){
+								$kosong++; // Tambah 1 variabel $kosong
+							}
+							
+							echo "<tr>";
+							echo "<td".$nama_karyawan_td.">".$id."</td>";
+							echo "<td".$tangibles_td.">".$tangibles."</td>";
+							echo "<td".$realibility_td.">".$reliability."</td>";
+							echo "<td".$responsiivness_td.">".$responsiveness."</td>";
+							echo "<td".$assurence_td.">".$assurance."</td>";
+							echo "<td".$emphaty_td.">".$empathy."</td>";
+							echo "</tr>";
+						}
+						
+						$numrow++; // Tambah 1 setiap kali looping
+					}
+					
+					echo "</table>";
+					
+					// Cek apakah variabel kosong lebih dari 1
+					// Jika lebih dari 1, berarti ada data yang masih kosong
+					if($kosong > 1){
+					?>	
+						<script>
+						$(document).ready(function(){
+							// Ubah isi dari tag span dengan id jumlah_kosong dengan isi dari variabel kosong
+							$("#jumlah_kosong").html('<?php echo $kosong; ?>');
+							
+							$("#kosong").show(); // Munculkan alert validasi kosong
+						});
+						</script>
+					<?php
+					}else{ // Jika semua data sudah diisi
+						echo "<hr>";
+						
+						// Buat sebuah tombol untuk mengimport data ke database
+						echo "<button type='submit' name='upload' class='btn btn-primary'><span class='glyphicon glyphicon-upload'></span> upload</button>";
+					}
+					
+					echo "</form>";
+				}else{ // Jika file yang diupload bukan File Excel 2007 (.xlsx)
+					// Munculkan pesan validasi
+					echo "<div class='alert alert-danger'>
+					Hanya File Excel 2007 (.xlsx) yang diperbolehkan
+					</div>";
+				}
+			}
+			?>
+		</div>
+	</body>
+</html>
+=======
+>>>>>>> 8791476a4f8a9ceee43e0668f737fdf42c80e50d
         <!-- file php IMPORT-->
     <!-- Membuat Menu Header / Navbar -->
     <!-- Content -->
@@ -350,6 +529,7 @@
 <div id="Tokyo" class="tabcontent">
   <h3>Tokyo</h3>
   <p>Tokyo is the capital of Japan.</p>
+>>>>>>> parent of 1f54def... upload downoad kelar
 </div>
                     <br />
                     <br />
